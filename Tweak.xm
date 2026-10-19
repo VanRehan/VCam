@@ -16,6 +16,17 @@ static UIButton *g_floatButton = nil;
 // MARK: - 悬浮按钮 UI
 // ============================================================================
 
+@interface VCamOverlayWindow : UIWindow
+@end
+
+@implementation VCamOverlayWindow
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UIView *hitView = [super hitTest:point withEvent:event];
+    if (hitView == self || hitView == self.rootViewController.view) return nil;
+    return hitView;
+}
+@end
+
 @interface VCamFloatButton : UIButton
 @property (nonatomic, assign) CGPoint initialCenter;
 @end
@@ -24,8 +35,8 @@ static UIButton *g_floatButton = nil;
 @end
 
 static void setupFloatButton(void);
-static void handlePanGesture(UIPanGestureRecognizer *gesture);
-static void handleTapGesture(UITapGestureRecognizer *gesture);
+static void handlePanGesture(id self, SEL _cmd, UIPanGestureRecognizer *gesture);
+static void handleTapGesture(id self, SEL _cmd, UITapGestureRecognizer *gesture);
 
 static void setupFloatButton() {
     if (g_floatButton) return;
@@ -55,7 +66,7 @@ static void setupFloatButton() {
         initWithTarget:g_floatButton action:@selector(handleTap:)];
     [g_floatButton addGestureRecognizer:tap];
     
-    g_overlayWindow = [[UIWindow alloc] initWithFrame:screen];
+    g_overlayWindow = [[VCamOverlayWindow alloc] initWithFrame:screen];
     g_overlayWindow.windowLevel = UIWindowLevelAlert + 100;
     g_overlayWindow.hidden = NO;
     g_overlayWindow.backgroundColor = [UIColor clearColor];
@@ -72,7 +83,7 @@ static void setupFloatButton() {
                     (IMP)handleTapGesture, "v@:@");
 }
 
-static void handlePanGesture(UIPanGestureRecognizer *gesture) {
+static void handlePanGesture(id self, SEL _cmd, UIPanGestureRecognizer *gesture) {
     UIView *btn = gesture.view;
     CGPoint translation = [gesture translationInView:btn.superview];
     btn.center = CGPointMake(btn.center.x + translation.x, btn.center.y + translation.y);
@@ -138,7 +149,7 @@ static UIViewController *findTopViewController(void) {
 
 static VCamImagePickerControllerDelegate *g_pickerDelegate = nil;
 
-static void handleTapGesture(UITapGestureRecognizer *gesture) {
+static void handleTapGesture(id self, SEL _cmd, UITapGestureRecognizer *gesture) {
     UIViewController *topVC = findTopViewController();
     if (!topVC) return;
     
