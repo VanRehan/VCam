@@ -1,8 +1,8 @@
 Package: com.yourname.vcam
-Name: VCam
-Version: 1.0.0
+Name: VCam Tiếng Việt
+Version: 1.0.0-vi1
 Architecture: iphoneos-arm
-Description: 开源虚拟相机插件 - 替换摄像头输入为自定义视频
+Description: Camera ảo VCam - giao diện tiếng Việt, chọn video có sẵn làm nguồn camera
 Maintainer: Your Name
 Author: Your Name
 Section: Tweaks
