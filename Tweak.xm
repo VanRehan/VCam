@@ -154,11 +154,11 @@ static void handleTapGesture(id self, SEL _cmd, UITapGestureRecognizer *gesture)
     if (!topVC) return;
     
     UIAlertController *alert = [UIAlertController 
-        alertControllerWithTitle:@"VCam" 
-        message:g_vcamEnabled ? @"虚拟相机已启用" : @"虚拟相机已关闭"
+        alertControllerWithTitle:@"VCam Tiếng Việt" 
+        message:g_vcamEnabled ? @"Camera ảo đang bật" : @"Camera ảo đang tắt"
         preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"选择视频" 
+    [alert addAction:[UIAlertAction actionWithTitle:@"Chọn video từ thư viện" 
         style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
@@ -171,7 +171,7 @@ static void handleTapGesture(id self, SEL _cmd, UITapGestureRecognizer *gesture)
         [topVC presentViewController:picker animated:YES completion:nil];
     }]];
     
-    [alert addAction:[UIAlertAction actionWithTitle:g_vcamEnabled ? @"关闭虚拟相机" : @"开启虚拟相机" 
+    [alert addAction:[UIAlertAction actionWithTitle:g_vcamEnabled ? @"Tắt camera ảo" : @"Bật camera ảo" 
         style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         g_vcamEnabled = !g_vcamEnabled;
         if (g_floatButton) {
@@ -186,7 +186,7 @@ static void handleTapGesture(id self, SEL _cmd, UITapGestureRecognizer *gesture)
         }
     }]];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Hủy" style:UIAlertActionStyleCancel handler:nil]];
     
     if (alert.popoverPresentationController) {
         alert.popoverPresentationController.sourceView = gesture.view;
